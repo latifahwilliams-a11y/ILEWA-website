@@ -16,6 +16,41 @@
   <link rel="manifest" href="site.webmanifest">
 
     <title>ILEWA | The Future of Beauty Retail</title>
+    <meta name="description" content="ILEWA is a curated beauty marketplace for hair, skincare, body, makeup, and fragrance. Discover brands made for you and earn rewards every time you shop." />
+    <meta name="keywords" content="beauty, skincare, hair care, makeup, fragrance, body care, Black-owned beauty, ILEWA" />
+    <meta name="author" content="ILEWA World" />
+    <link rel="canonical" href="https://ilewa.world/" />
+
+    <!-- Open Graph / Social Sharing -->
+    <meta property="og:title" content="ILEWA | The Future of Beauty Retail" />
+    <meta property="og:description" content="Discover curated beauty products — hair, skincare, body, makeup, and fragrance. Earn rewards every time you shop at ILEWA." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://ilewa.world/" />
+    <meta property="og:image" content="apple-touch-icon.png" />
+    <meta property="og:site_name" content="ILEWA" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="ILEWA | The Future of Beauty Retail" />
+    <meta name="twitter:description" content="Discover curated beauty products — hair, skincare, body, makeup, and fragrance. Earn rewards every time you shop at ILEWA." />
+    <meta name="twitter:image" content="apple-touch-icon.png" />
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "ILEWA",
+      "url": "https://ilewa.world/",
+      "logo": "https://ilewa.world/apple-touch-icon.png",
+      "description": "ILEWA is a curated beauty marketplace for hair, skincare, body, makeup, and fragrance.",
+      "sameAs": [
+        "https://www.instagram.com/ilewa.world",
+        "https://www.tiktok.com/@ilewa.world",
+        "https://ilewaworld.substack.com/"
+      ]
+    }
+    </script>
 
     <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,400;1,700&family=Ojuju:wght@700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -39,6 +74,28 @@
             --faq-question-color: var(--brand-red); /* Red for questions */
             --faq-plus-color: var(--brand-red); /* Red for plus icon */
             --faq-hover-bg: var(--mid-green); /* Mid green for hover */
+        }
+
+        /* --- Skip Link (Accessibility) --- */
+        .skip-link {
+            position: absolute;
+            top: -100%;
+            left: 0;
+            background: #780C28;
+            color: #fff;
+            padding: 10px 20px;
+            font-weight: 700;
+            font-size: 1rem;
+            z-index: 9999;
+            text-decoration: none;
+        }
+        .skip-link:focus { top: 0; }
+
+        /* --- Focus Styles --- */
+        *:focus-visible {
+            outline: 3px solid #780C28;
+            outline-offset: 3px;
+            border-radius: 2px;
         }
 
         /* --- Base Styles --- */
@@ -987,7 +1044,9 @@
 </head>
 <body>
 
-<div class="modal-overlay" id="customModal">
+<a href="#hero" class="skip-link">Skip to main content</a>
+
+<div class="modal-overlay" id="customModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
     <div class="modal-content">
         <h3 id="modalTitle"></h3>
         <p id="modalMessage"></p>
@@ -995,13 +1054,14 @@
     </div>
 </div>
 
-<nav class="navbar" id="navbar">
-    <a href="#" class="nav-title">ILEWA</a>
-    
+<nav class="navbar" id="navbar" role="navigation" aria-label="Main navigation">
+    <a href="index.html" class="nav-title" aria-label="ILEWA home">ILEWA</a>
+
     <a href="partner.html" class="nav-partner-link" data-netlify-form-id="partner-form">BECOME A PARTNER</a>
 
     <div class="nav-links-wrapper">
-        <a href="#about" class="nav-link">ABOUT</a>
+        <a href="shop.html" class="nav-link">SHOP</a>
+        <a href="about.html" class="nav-link">ABOUT</a>
         <a href="#quiz" onclick="showGame('guess')" class="nav-link">GUESS THE BRAND</a>
         <a href="#faq" class="nav-link">FAQ</a>
     </div>
@@ -1014,7 +1074,7 @@
     <textarea name="message"></textarea>
 </form>
 
-<section class="hero-section loaded">
+<section class="hero-section loaded" id="hero">
     <div class="hero-left">
         <h1 class="hero-brand-logo">ILEWA</h1>
         <h2 class="hero-title-tagline">THE FUTURE OF BEAUTY RETAIL</h2>
@@ -1107,28 +1167,28 @@
 <section class="image-grid-section">
     <h2 class="grid-header">YOUR NEXT BEAUTY OBSESSION AWAITS</h2>
     <div class="horizontal-scroll-wrapper" id="scroll-wrapper">
-        <div class="grid-item"><img src="https://cdn.prod.website-files.com/621796a8c6ab99d03ddfa05c/67a924726def185314354907_Sliq_Product_Campaign0586-p-2600.jpeg" alt="Sliq Product, black owned hair care brand, black beauty, natural hair care, curly hair care, deep conditioner"></div>
-        <div class="grid-item"><img src="https://moodeaux.com/cdn/shop/files/MOODEAUX_PunkStar_Eau_de_Parfum_50mL_900x.png?v=1730893512" alt="Moodeaux Perfume, Black Owned Perfume Brand,black beauty"></div>
-        <div class="grid-item"><img src="https://shop.deonlibra.com/cdn/shop/files/counterkitsiteupdate_3000x.png?v=1754786773" alt="Deon Libra Counterkit| Black Owned beauty business| black owned"></div>
-        <div class="grid-item"><img src="https://is4.revolveassets.com/images/p4/n/z/OPLR-WU5_V1.jpg" alt="Oplare Lip Balm, Black owned lip balm, lipgloss, Black owned Beauty prodcuts"></div>
-        <div class="grid-item"><img src="https://cdn.shopify.com/s/files/1/0939/6702/4393/files/silk-veil-tuberose-jasmine-shower-oil-39bc_2_3d087cec-1c10-48af-a466-b37defaafbde.png?v=1753453835&width=1000&height=1333&crop=center" alt="Silk Veil Shower Oil, black owned beauty brand, body oil, shiny skin"></div>
+        <div class="grid-item"><img src="https://cdn.prod.website-files.com/621796a8c6ab99d03ddfa05c/67a924726def185314354907_Sliq_Product_Campaign0586-p-2600.jpeg" alt="Sliq Product, black owned hair care brand, black beauty, natural hair care, curly hair care, deep conditioner" loading="lazy"></div>
+        <div class="grid-item"><img src="https://moodeaux.com/cdn/shop/files/MOODEAUX_PunkStar_Eau_de_Parfum_50mL_900x.png?v=1730893512" alt="Moodeaux Perfume, Black Owned Perfume Brand,black beauty" loading="lazy"></div>
+        <div class="grid-item"><img src="https://shop.deonlibra.com/cdn/shop/files/counterkitsiteupdate_3000x.png?v=1754786773" alt="Deon Libra Counterkit| Black Owned beauty business| black owned" loading="lazy"></div>
+        <div class="grid-item"><img src="https://is4.revolveassets.com/images/p4/n/z/OPLR-WU5_V1.jpg" alt="Oplare Lip Balm, Black owned lip balm, lipgloss, Black owned Beauty prodcuts" loading="lazy"></div>
+        <div class="grid-item"><img src="https://cdn.shopify.com/s/files/1/0939/6702/4393/files/silk-veil-tuberose-jasmine-shower-oil-39bc_2_3d087cec-1c10-48af-a466-b37defaafbde.png?v=1753453835&width=1000&height=1333&crop=center" alt="Silk Veil Shower Oil, black owned beauty brand, body oil, shiny skin" loading="lazy"></div>
 
-        <div class="grid-item"><img src="https://www.naturallydrenched.com/cdn/shop/files/2_f2153191-c340-4f5c-84e0-bd2893418335.png?v=1739588679&width=528" alt="Naturally Drenched Hair Product| black owned hair care brand| black owned beauty | natural hair| curly hair"></div>
-        <div class="grid-item"><img src="https://heavenlyskincare.co/cdn/shop/files/HBN_WHITEBG_IMAGERY-3.jpg?v=1743015490&width=1200" alt="Heavenly Skincare Body Oil, black owned business, black owned beauty company, body oil, body care"></div>
-        <div class="grid-item"><img src="https://doncosmetics.co/cdn/shop/files/LSP_01.png?v=1713370903&width=823" alt="Don Cosmetics Lip Shine , black owned business, black owned beauty brand, lipgloss, makeup"></div>
-        <div class="grid-item"><img src="https://naturalhair.org/cdn/shop/files/HoneyCurlsCurlStyler12oz-Flat_1024x1024@2x.jpg?v=1745591680" alt="Honey Curls Styler, black owned business, natural hair care, curly hair care"></div>
-        <div class="grid-item"><img src="https://www.michebeauty.com/cdn/shop/files/IMG-2450.jpg?v=1720587606&width=1800" alt="Miche Beauty Products, natural hair care, curly hair care, black owned business"></div>
+        <div class="grid-item"><img src="https://www.naturallydrenched.com/cdn/shop/files/2_f2153191-c340-4f5c-84e0-bd2893418335.png?v=1739588679&width=528" alt="Naturally Drenched Hair Product| black owned hair care brand| black owned beauty | natural hair| curly hair" loading="lazy"></div>
+        <div class="grid-item"><img src="https://heavenlyskincare.co/cdn/shop/files/HBN_WHITEBG_IMAGERY-3.jpg?v=1743015490&width=1200" alt="Heavenly Skincare Body Oil, black owned business, black owned beauty company, body oil, body care" loading="lazy"></div>
+        <div class="grid-item"><img src="https://doncosmetics.co/cdn/shop/files/LSP_01.png?v=1713370903&width=823" alt="Don Cosmetics Lip Shine , black owned business, black owned beauty brand, lipgloss, makeup" loading="lazy"></div>
+        <div class="grid-item"><img src="https://naturalhair.org/cdn/shop/files/HoneyCurlsCurlStyler12oz-Flat_1024x1024@2x.jpg?v=1745591680" alt="Honey Curls Styler, black owned business, natural hair care, curly hair care" loading="lazy"></div>
+        <div class="grid-item"><img src="https://www.michebeauty.com/cdn/shop/files/IMG-2450.jpg?v=1720587606&width=1800" alt="Miche Beauty Products, natural hair care, curly hair care, black owned business" loading="lazy"></div>
         
-        <div class="grid-item"><img src="https://cdn.prod.website-files.com/621796a8c6ab99d03ddfa05c/67a924726def185314354907_Sliq_Product_Campaign0586-p-2600.jpeg" alt="Sliq Product| deep conditoner| black owned hair care brand| natural hair care"></div>
-        <div class="grid-item"><img src="https://moodeaux.com/cdn/shop/files/MOODEAUX_PunkStar_Eau_de_Parfum_50mL_900x.png?v=1730893512" alt="Moodeaux Perfume"></div>
-        <div class="grid-item"><img src="https://shop.deonlibra.com/cdn/shop/files/counterkitsiteupdate_3000x.png?v=1754786773" alt="Deon Libra Counterkit"></div>
-        <div class="grid-item"><img src="https://is4.revolveassets.com/images/p4/n/z/OPLR-WU5_V1.jpg" alt="Oplare Lip Balm"></div>
-        <div class="grid-item"><img src="https://cdn.shopify.com/s/files/1/0939/6702/4393/files/silk-veil-tuberose-jasmine-shower-oil-39bc_2_3d087cec-1c10-48af-a466-b37defaafbde.png?v=1753453835&width=1000&height=1333&crop=center" alt="Silk Veil Shower Oil"></div>
-        <div class="grid-item"><img src="https://www.naturallydrenched.com/cdn/shop/files/2_f2153191-c340-4f5c-84e0-bd2893418335.png?v=1739588679&width=528" alt="Naturally Drenched Hair Product"></div>
-        <div class="grid-item"><img src="https://heavenlyskincare.co/cdn/shop/files/HBN_WHITEBG_IMAGERY-3.jpg?v=1743015490&width=1200" alt="Heavenly Skincare Body Oil"></div>
-        <div class="grid-item"><img src="https://doncosmetics.co/cdn/shop/files/LSP_01.png?v=1713370903&width=823" alt="Don Cosmetics Lip Shine"></div>
-        <div class="grid-item"><img src="https://naturalhair.org/cdn/shop/files/HoneyCurlsCurlStyler12oz-Flat_1024x1024@2x.jpg?v=1745591680" alt="Honey Curls Styler"></div>
-        <div class="grid-item"><img src="https://www.michebeauty.com/cdn/shop/files/IMG-2450.jpg?v=1720587606&width=1800" alt="Miche Beauty Products"></div>
+        <div class="grid-item"><img src="https://cdn.prod.website-files.com/621796a8c6ab99d03ddfa05c/67a924726def185314354907_Sliq_Product_Campaign0586-p-2600.jpeg" alt="Sliq Product| deep conditoner| black owned hair care brand| natural hair care" loading="lazy"></div>
+        <div class="grid-item"><img src="https://moodeaux.com/cdn/shop/files/MOODEAUX_PunkStar_Eau_de_Parfum_50mL_900x.png?v=1730893512" alt="Moodeaux Perfume" loading="lazy"></div>
+        <div class="grid-item"><img src="https://shop.deonlibra.com/cdn/shop/files/counterkitsiteupdate_3000x.png?v=1754786773" alt="Deon Libra Counterkit" loading="lazy"></div>
+        <div class="grid-item"><img src="https://is4.revolveassets.com/images/p4/n/z/OPLR-WU5_V1.jpg" alt="Oplare Lip Balm" loading="lazy"></div>
+        <div class="grid-item"><img src="https://cdn.shopify.com/s/files/1/0939/6702/4393/files/silk-veil-tuberose-jasmine-shower-oil-39bc_2_3d087cec-1c10-48af-a466-b37defaafbde.png?v=1753453835&width=1000&height=1333&crop=center" alt="Silk Veil Shower Oil" loading="lazy"></div>
+        <div class="grid-item"><img src="https://www.naturallydrenched.com/cdn/shop/files/2_f2153191-c340-4f5c-84e0-bd2893418335.png?v=1739588679&width=528" alt="Naturally Drenched Hair Product" loading="lazy"></div>
+        <div class="grid-item"><img src="https://heavenlyskincare.co/cdn/shop/files/HBN_WHITEBG_IMAGERY-3.jpg?v=1743015490&width=1200" alt="Heavenly Skincare Body Oil" loading="lazy"></div>
+        <div class="grid-item"><img src="https://doncosmetics.co/cdn/shop/files/LSP_01.png?v=1713370903&width=823" alt="Don Cosmetics Lip Shine" loading="lazy"></div>
+        <div class="grid-item"><img src="https://naturalhair.org/cdn/shop/files/HoneyCurlsCurlStyler12oz-Flat_1024x1024@2x.jpg?v=1745591680" alt="Honey Curls Styler" loading="lazy"></div>
+        <div class="grid-item"><img src="https://www.michebeauty.com/cdn/shop/files/IMG-2450.jpg?v=1720587606&width=1800" alt="Miche Beauty Products" loading="lazy"></div>
     </div>
 </section>
 
@@ -1180,22 +1240,25 @@
 
 <footer>
     <div class="footer-wrapper">
-        <div class="wavy-border"></div>
-
         <div class="footer-content">
             <div class="footer-title">Connect with Us. Stay Updated.</div>
-            
             <div class="footer-waitlist-cta">
                  <a href="#cta" class="button-cta">JOIN THE WAITLIST</a>
             </div>
-
+            <nav aria-label="Footer navigation" style="margin: 16px 0;">
+                <a href="about.html" style="color:white;margin:0 12px;font-size:0.9rem;">About</a>
+                <a href="shop.html" style="color:white;margin:0 12px;font-size:0.9rem;">Shop</a>
+                <a href="contact.html" style="color:white;margin:0 12px;font-size:0.9rem;">Contact</a>
+                <a href="privacy.html" style="color:white;margin:0 12px;font-size:0.9rem;">Privacy Policy</a>
+                <a href="terms.html" style="color:white;margin:0 12px;font-size:0.9rem;">Terms</a>
+            </nav>
             <div class="social-links">
-                <a href="https://ilewaworld.substack.com/" aria-label="Follow us on Substack"><i class="fas fa-newspaper"></i></a>
-                <a href="#" aria-label="Connect with us on LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                <a href="https://www.instagram.com/ilewa.world" aria-label="Follow us on Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="https://www.tiktok.com/@ilewa.world?_t=ZP-90TvcpDI8PG&_r=1" aria-label="Follow us on TikTok"><i class="fab fa-tiktok"></i></a>
+                <a href="https://ilewaworld.substack.com/" aria-label="Follow us on Substack"><i class="fas fa-newspaper" aria-hidden="true"></i></a>
+                <a href="#" aria-label="Connect with us on LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
+                <a href="https://www.instagram.com/ilewa.world" aria-label="Follow us on Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+                <a href="https://www.tiktok.com/@ilewa.world" aria-label="Follow us on TikTok"><i class="fab fa-tiktok" aria-hidden="true"></i></a>
             </div>
-            <p class="footer-copyright">&copy; 2025 Ilewa. All rights reserved.</p>
+            <p class="footer-copyright">&copy; 2025 Ilewa World, Inc. All Rights Reserved.</p>
         </div>
     </div>
 </footer>

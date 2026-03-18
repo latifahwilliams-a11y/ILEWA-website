@@ -5,6 +5,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ilewa | Checkout</title>
+  <meta name="description" content="Review your ILEWA cart and complete your beauty purchase securely." />
+  <meta name="robots" content="noindex, nofollow" />
+
   <link href="https://fonts.googleapis.com/css2?family=Ojuju:wght@400;500;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel="stylesheet" href="style.css" />
@@ -14,16 +17,17 @@
   <script src="checkout.js" defer></script>
 </head>
 <body>
-  <header class="navbar">
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <header class="navbar" role="banner">
     <div class="nav-left">
-      <a href="index.html" class="logo">ILEWA</a>
+      <a href="index.html" class="logo" aria-label="ILEWA home">ILEWA</a>
     </div>
     <div class="nav-right">
-      <a href="shop.html" class="icon" title="Back to shop"><i class="fas fa-store"></i></a>
+      <a href="shop.html" class="icon" aria-label="Back to shop"><i class="fas fa-store" aria-hidden="true"></i></a>
     </div>
   </header>
 
-  <main class="checkout-wrapper">
+  <main class="checkout-wrapper" id="main-content">
     <h1>Checkout</h1>
     <div class="checkout-grid">
       <section>

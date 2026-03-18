@@ -12,13 +12,23 @@ let cart = JSON.parse(localStorage.getItem('ilewaCart')) || [];
 
 // --- UI FUNCTIONS ---
 
+let _cartOpenTrigger = null; // element that opened the cart, for focus restoration
+
 /**
  * Opens the cart drawer and backdrop.
  */
 function openCart() {
     cartDrawer?.classList.add('open');
     cartBackdrop?.classList.add('active');
-    document.body.style.overflow = 'hidden'; 
+    cartBackdrop?.removeAttribute('aria-hidden');
+    document.body.style.overflow = 'hidden';
+    // Update aria-expanded on the button that triggered open
+    document.querySelectorAll('[aria-controls="cartDrawer"]').forEach(btn => {
+        btn.setAttribute('aria-expanded', 'true');
+    });
+    // Move focus to close button
+    const closeBtn = document.getElementById('closeCartBtn');
+    if (closeBtn) setTimeout(() => closeBtn.focus(), 50);
 }
 
 /**
@@ -26,8 +36,15 @@ function openCart() {
  */
 function closeCart() {
     cartDrawer?.classList.remove('open');
+    cartBackdrop?.classList.add('active');
+    cartBackdrop?.setAttribute('aria-hidden', 'true');
     cartBackdrop?.classList.remove('active');
     document.body.style.overflow = '';
+    document.querySelectorAll('[aria-controls="cartDrawer"]').forEach(btn => {
+        btn.setAttribute('aria-expanded', 'false');
+    });
+    // Restore focus to opening element
+    if (_cartOpenTrigger) _cartOpenTrigger.focus();
 }
 
 /**
@@ -59,25 +76,21 @@ function renderCartItems() {
 
         return `
             <div class="cart-item" data-id="${item.id}" data-shade="${item.shade || ''}">
-                
                 <div class="item-details">
                     <div class="item-name-row">
-                        <img src="${imgUrl}" alt="${name}" class="item-icon-image">
+                        <img src="${imgUrl}" alt="" class="item-icon-image" loading="lazy" aria-hidden="true">
                         <p class="item-name">${name}</p>
                     </div>
-                    
                     ${item.shade ? `<p class="item-shade">Shade: ${item.shade}</p>` : ''}
                     <p class="item-price">$${price.toFixed(2)}</p>
-                    
-                    <div class="item-quantity-controls">
-                        <button onclick="changeQty('${item.id}', -1, ${shadeArg})">-</button>
-                        <span>${item.qty}</span>
-                        <button onclick="changeQty('${item.id}', 1, ${shadeArg})">+</button>
+                    <div class="item-quantity-controls" role="group" aria-label="Quantity for ${name}">
+                        <button onclick="changeQty('${item.id}', -1, ${shadeArg})" aria-label="Decrease quantity of ${name}">-</button>
+                        <span aria-live="polite" aria-atomic="true">${item.qty}</span>
+                        <button onclick="changeQty('${item.id}', 1, ${shadeArg})" aria-label="Increase quantity of ${name}">+</button>
                     </div>
                 </div>
-                
-                <button class="remove-item-btn" onclick="removeItem('${item.id}', ${shadeArg})">
-                    <i class="fas fa-trash-alt"></i>
+                <button class="remove-item-btn" onclick="removeItem('${item.id}', ${shadeArg})" aria-label="Remove ${name} from bag">
+                    <i class="fas fa-trash-alt" aria-hidden="true"></i>
                 </button>
             </div>
         `;
@@ -165,25 +178,36 @@ function removeItem(id, shade = '') {
 
 // --- INITIALIZATION ---
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Set up event listeners for opening/closing the cart
     const cartIcon = document.querySelector('.cart-icon');
+    const openCartBtn = document.getElementById('openCartBtn');
     const closeBtn = document.getElementById('closeCartBtn');
-    
-    cartIcon?.addEventListener('click', (e) => {
+
+    function handleOpenCart(e) {
         e.preventDefault();
+        _cartOpenTrigger = e.currentTarget;
         openCart();
-    });
+    }
+
+    cartIcon?.addEventListener('click', handleOpenCart);
+    openCartBtn?.addEventListener('click', handleOpenCart);
 
     closeBtn?.addEventListener('click', closeCart);
     cartBackdrop?.addEventListener('click', closeCart);
 
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && cartDrawer?.classList.contains('open')) {
+            closeCart();
+        }
+    });
+
     // Hook up checkout button to go to checkout page
     const checkoutBtn = document.getElementById('checkoutBtn');
     checkoutBtn?.addEventListener('click', () => {
-        closeCart?.();
+        closeCart();
         window.location.href = 'checkout.html';
     });
 
-    // 2. Initial render of the cart contents
+    // Initial render of the cart contents
     renderCartItems();
 });
