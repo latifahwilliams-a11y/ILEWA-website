@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ILEWA Brand Dashboard - Product Management</title>
+  <link rel="stylesheet" href="userdashbord.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Ojuju:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+</head>
+
+<body>
+  <header class="dashboard-header">
+    <div class="logo-container">
+      <a href="index.html" class="logo-text">ILEWA</a>
+    </div>
+    <div class="user-profile">
+      <span class="user-name"></span>
+      <button id="logoutBtn" class="logout-btn">Log Out</button>
+      <i class="fas fa-user-circle user-icon" title="Sign Out"></i>
+    </div>
+  </header>
+
+  <div class="main-layout">
+    <nav class="sidebar">
+      <ul>
+        <li><a href="brand-dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard Overview</a></li>
+        <li class="active"><a href="brand-product-management.html"><i class="fas fa-box"></i> Product Management</a></li>
+        <li><a href="brand-sales-earnings.html"><i class="fas fa-chart-line"></i> Sales & Earnings</a></li>
+      </ul>
+    </nav>
+
+    <main class="content-area">
+      <h1 class="page-title"><i class="fas fa-box"></i> Product Management</h1>
+
+      <section class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;">
+          <h2 style="color:var(--primary-green);font-size:1.5rem;">Product Catalog</h2>
+          <button class="export-button"><i class="fas fa-plus-circle"></i> Add New Product</button>
+        </div>
+
+        <div class="order-table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>SKU</th>
+                <th>Units Sold</th>
+                <th>Gross Sales</th>
+                <th>Inventory</th>
+                <th>Rating</th>
+              </tr>
+            </thead>
+            <tbody id="catalogBody">
+              <tr><td colspan="6" style="text-align:center;color:gray;">Loading...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer class="ilewa-footer">
+    <div class="footer-content">
+      <p>&copy; 2025 Ilewa. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script type="module">
+    import { supabase } from "./shared-supabase.js";
+
+    async function loadCatalog() {
+      let { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        const { data: { session } } = await supabase.auth.getSession();
+        user = session?.user;
+      }
+      if (!user) return (window.location.href = "auth.html");
+
+      document.querySelector(".user-name").textContent = user.email;
+
+      const { data: products, error } = await supabase
+        .from("products")
+        .select("name, sku, units_sold, price, inventory, rating")
+        .eq("brand_id", user.id)
+        .order("created_at", { ascending: false });
+
+      const tbody = document.getElementById("catalogBody");
+      if (error) {
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:red;">Error loading products.</td></tr>`;
+        return;
+      }
+
+      if (!products || products.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:gray;">No products found.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = products.map(p => `
+        <tr>
+          <td>${p.name}</td>
+          <td>${p.sku || "—"}</td>
+          <td>${p.units_sold || 0}</td>
+          <td>$${(p.units_sold * p.price).toFixed(2)}</td>
+          <td>${p.inventory ?? "N/A"}</td>
+          <td>${p.rating ? p.rating.toFixed(1) : "—"}</td>
+        </tr>
+      `).join("");
+    }
+
+    // === Logout Button + Icon ===
+    document.getElementById("logoutBtn").addEventListener("click", async () => {
+      await supabase.auth.signOut();
+      window.location.href = "auth.html";
+    });
+
+    document.querySelector(".fas.fa-user-circle").addEventListener("click", async () => {
+      await supabase.auth.signOut();
+      window.location.href = "auth.html";
+    });
+
+    loadCatalog();
+  </script>
+</body>
+</html>

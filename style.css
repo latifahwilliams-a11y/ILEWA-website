@@ -1,0 +1,166 @@
+/* style.css (Restored, Consolidated, and Finalized) */
+
+/* --- Color Variables (Consolidating all hex codes into variables) --- */
+:root {
+    --white: #ffffff;
+    --light-green: #EAFAEA; /* Corresponds to #eafaea (Navbar BG) */
+    --mid-green: #CAE0BC; /* Corresponds to #cae0bc */
+    --dark-green: #6E8E59; /* Corresponds to #6e8e59 (Accent/CTA) */
+    --brand-red: #780C28; /* Corresponds to #780c28 (Primary Brand Accent) */
+    --dark-text: #222; /* General dark text */
+    --bg-light: #F2F0EF; /* Corresponds to #F2F0EF (Body/Cart BG) */
+}
+
+/* ===== FONTS & GLOBAL COLORS ===== */
+body {
+  font-family: 'Lato', sans-serif;
+  background-color: var(--bg-light); /* Using variable */
+  color: var(--dark-text); /* Using variable */
+  margin: 0;
+  padding: 0;
+}
+
+/* Global Rule: Ojuju for all headers (Ensuring consistency) */
+h1, h2, h3.title, h4 { 
+    font-family: 'Ojuju', sans-serif;
+    line-height: 1.1;
+}
+
+/* Global CTA Button Styling */
+.button-cta {
+    display: inline-block;
+    padding: 12px 30px;
+    background-color: var(--brand-red);
+    color: var(--white);
+    text-decoration: none;
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 1rem;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    letter-spacing: 0.5px;
+}
+.button-cta:hover {
+    background-color: #5d0c20; /* Darker red */
+}
+
+
+/* ===== NAVBAR (FIGS-STYLE) ===== */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--light-green); /* Light Green */
+  padding: 10px 40px;
+  height: 60px;
+}
+
+.nav-left .logo {
+  font-family: 'Ojuju', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--brand-red); /* Deep Red */
+  text-decoration: none;
+}
+
+.nav-center a {
+  font-family: 'Lato', sans-serif;
+  color: var(--dark-text);
+  text-decoration: none;
+  margin: 0 15px;
+  font-size: 1rem;
+  font-weight: 700;
+  transition: color 0.3s;
+}
+.nav-center a:hover {
+  color: var(--dark-green);
+}
+
+.nav-right .icon {
+    color: var(--dark-text);
+    margin-left: 20px;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+.nav-right .icon:hover {
+    color: var(--brand-red);
+}
+.nav-right .icon svg {
+    stroke: var(--brand-red); /* Style for the cart SVG */
+    transition: stroke 0.3s;
+}
+.nav-right .icon:hover svg {
+    stroke: var(--dark-green);
+}
+
+
+/* =========================== */
+/* --- FOOTER STYLING --- */
+/* =========================== */
+.footer-wrapper {
+    background-color: var(--brand-red);
+    color: var(--white);
+}
+
+/* Removed: .wavy-border styling has been deleted. */
+
+.footer-content {
+    padding: 40px 20px 40px 20px;
+    text-align: center;
+}
+    
+.footer-title {
+    font-family: 'Ojuju', sans-serif;
+    font-size: 48px;
+    color: var(--white);
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+}
+
+.footer-waitlist-cta {
+     margin-top: 30px;
+     margin-bottom: 40px;
+}
+.footer-waitlist-cta .button-cta {
+    background-color: var(--dark-green);
+}
+.footer-waitlist-cta .button-cta:hover {
+    background-color: var(--mid-green);
+    color: var(--text-black);
+}
+
+.social-links a {
+    color: var(--white);
+    font-size: 1.5rem;
+    margin: 0 15px;
+    transition: color 0.3s;
+}
+.social-links a:hover {
+    color: var(--dark-green);
+}
+
+.footer-copyright {
+    font-size: 0.85rem;
+    margin-top: 30px;
+    opacity: 0.8;
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 10px 20px;
+    }
+    .nav-center {
+        display: none; /* Hide center nav on mobile */
+    }
+    .nav-left .logo {
+        font-size: 1.8rem;
+    }
+    .footer-title {
+        font-size: 32px;
+    }
+}

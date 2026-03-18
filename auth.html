@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ilewa | Account</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Ojuju:wght@500;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="auth.css" />
+</head>
+<body>
+  <header class="dashboard-header">
+    <div class="logo-container">
+      <a href="index.html" class="logo-text">ILEWA</a>
+    </div>
+    <div class="user-profile">
+      <div class="user-icons-group">
+        <a href="#" id="openCartBtn" class="icon" title="Cart">
+          <i class="fas fa-shopping-bag"></i>
+        </a>
+        <a href="auth.html" class="icon" title="Profile">
+          <i class="fas fa-user-circle user-icon"></i>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="auth-page-container">
+    <div class="auth-box">
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="loginTab">LOG IN</button>
+        <button class="auth-tab" id="signupTab">SIGN UP</button>
+      </div>
+
+      <!-- Login Form -->
+      <div id="loginForm" class="auth-form active">
+        <h2>Welcome Back</h2>
+        <form id="loginFormEl">
+          <input type="email" id="loginEmail" placeholder="Email Address" required>
+          <input type="password" id="loginPassword" placeholder="Password" required>
+          <button type="submit" class="auth-btn">Log In</button>
+          <a href="#" class="forgot-link">Forgot Password?</a>
+          <p class="note" style="color:gray; margin-top:8px;">Brand founders: log in with credentials provided by Ilewa.</p>
+        </form>
+      </div>
+
+      <!-- Signup Form -->
+      <div id="signupForm" class="auth-form">
+        <h2>Create Your Account</h2>
+        <form id="signupFormEl">
+          <input type="text" id="signupName" placeholder="Full Name (Optional)">
+          <input type="email" id="signupEmail" placeholder="Email Address" required>
+          <input type="password" id="signupPassword" placeholder="Password (Min 6 characters)" required>
+          <button type="submit" class="auth-btn">Sign Up</button>
+          <p class="terms-text">By signing up, you agree to our Terms and Privacy Policy.</p>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <footer class="ilewa-footer">
+    <div class="footer-content">
+      <h3 class="footer-title">Connect with Us. Stay Updated.</h3>
+      <button class="join-waitlist-btn">JOIN THE WAITLIST</button>
+      <div class="social-icons">
+        <i class="fas fa-envelope"></i>
+        <i class="fab fa-linkedin-in"></i>
+        <i class="fab fa-instagram"></i>
+        <i class="fab fa-tiktok"></i>
+      </div>
+      <p class="copyright">&copy; 2025 Ilewa. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Toggle between Login and Signup tabs
+    document.getElementById('loginTab').addEventListener('click', () => {
+      document.getElementById('loginForm').classList.add('active');
+      document.getElementById('signupForm').classList.remove('active');
+      document.getElementById('loginTab').classList.add('active');
+      document.getElementById('signupTab').classList.remove('active');
+    });
+
+    document.getElementById('signupTab').addEventListener('click', () => {
+      document.getElementById('signupForm').classList.add('active');
+      document.getElementById('loginForm').classList.remove('active');
+      document.getElementById('signupTab').classList.add('active');
+      document.getElementById('loginTab').classList.remove('active');
+    });
+  </script>
+
+  <script type="module">
+    import { supabase } from "./shared-supabase.js";
+
+    // === SIGNUP HANDLER (Consumers only) ===
+    document.getElementById("signupFormEl").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const email = document.getElementById("signupEmail").value;
+      const password = document.getElementById("signupPassword").value;
+      const fullName = document.getElementById("signupName").value;
+
+      const { data, error } = await supabase.auth.signUp({ email, password });
+      if (error) {
+        alert("Signup failed: " + error.message);
+        return;
+      }
+
+      // Add profile record
+      const { error: insertError } = await supabase
+        .from("profiles")
+        .insert([{ id: data.user.id, full_name: fullName || "ILEWA Member", role: "consumer" }]);
+
+      if (insertError) {
+        console.error("Profile insert error:", insertError);
+        alert("Profile could not be created. Try again later.");
+        return;
+      }
+
+      alert("Signup successful! You can now log in.");
+      window.location.href = "auth.html";
+    });
+
+    // === LOGIN HANDLER ===
+    document.getElementById("loginFormEl").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const email = document.getElementById("loginEmail").value;
+      const password = document.getElementById("loginPassword").value;
+
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) {
+        alert("Login failed: " + error.message);
+        return;
+      }
+
+      const user = data.user;
+      const { data: profile, error: profileError } = await supabase
+        .from("profiles")
+        .select("role")
+        .eq("id", user.id)
+        .maybeSingle();
+
+      if (profileError) {
+        console.error("Profile fetch error:", profileError);
+        alert("Login successful, but profile not found.");
+        return;
+      }
+
+      if (profile?.role === "brand") {
+        window.location.href = "brand-dashboard.html";
+      } else {
+        window.location.href = "consumer-dashboard.html";
+      }
+    });
+  </script>
+</body>
+</html>

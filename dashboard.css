@@ -1,0 +1,510 @@
+/* dashboard.css */
+
+/* --- General Layout --- */
+.dashboard-page-container {
+    display: flex;
+    max-width: 1400px;
+    margin: 40px auto;
+    padding: 0 20px;
+    gap: 30px;
+}
+
+/* --- Sidebar --- */
+.sidebar {
+    flex: 0 0 250px; /* Fixed width */
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    height: fit-content;
+}
+
+.sidebar h2 {
+    font-family: 'Ojuju', sans-serif;
+    color: var(--brand-red);
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--mid-green);
+    padding-bottom: 10px;
+}
+
+.sidebar nav a {
+    display: flex;
+    align-items: center;
+    padding: 12px 10px;
+    margin-bottom: 5px;
+    text-decoration: none;
+    color: var(--text-black);
+    font-weight: 600;
+    border-radius: 5px;
+    transition: background-color 0.2s ease;
+}
+
+.sidebar nav a i {
+    margin-right: 10px;
+    color: var(--dark-green);
+}
+
+.sidebar nav a:hover {
+    background-color: var(--mid-green);
+}
+
+.sidebar nav a.active {
+    background-color: var(--mid-green);
+    color: var(--brand-red);
+}
+
+/* --- Main Content --- */
+.main-content {
+    flex-grow: 1;
+}
+
+.dashboard-title {
+    font-family: 'Ojuju', sans-serif;
+    color: var(--dark-green);
+    font-size: 2.2rem;
+    margin-bottom: 25px;
+    border-bottom: 2px solid var(--mid-green);
+    padding-bottom: 10px;
+}
+
+/* --- Metrics Grid (Brand Dashboard) --- */
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.metric-card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.metric-card i {
+    font-size: 2rem;
+    color: var(--brand-red);
+    margin-bottom: 10px;
+}
+
+.metric-card p {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 0;
+}
+
+.metric-card h3 {
+    font-family: 'Ojuju', sans-serif;
+    font-size: 2rem;
+    color: var(--dark-green);
+    margin: 5px 0 0;
+}
+
+/* --- Section Card / Data Table --- */
+.section-card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    margin-bottom: 30px;
+}
+
+.section-card h2 {
+    font-family: 'Ojuju', sans-serif;
+    font-size: 1.5rem;
+    color: var(--brand-red);
+    margin-bottom: 15px;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.data-table th, .data-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--mid-green);
+}
+
+.data-table th {
+    background-color: var(--mid-green);
+    color: var(--text-black);
+    font-weight: 700;
+}
+
+/* --- Order List (Orders Page) --- */
+.order-item {
+    background-color: white;
+    border: 1px solid var(--mid-green);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 15px;
+}
+
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px dashed var(--mid-green);
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--dark-green);
+}
+
+.order-status {
+    padding: 4px 10px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: white;
+}
+
+.status-delivered { background-color: var(--dark-green); }
+.status-processing { background-color: #f7b447; } 
+
+.order-details p {
+    margin: 5px 0;
+    font-size: 0.95rem;
+}
+
+.order-details span {
+    font-weight: 600;
+}
+
+.order-view-btn {
+    display: inline-block;
+    margin-top: 15px;
+    color: var(--brand-red);
+    text-decoration: none;
+    font-weight: 700;
+    transition: color 0.2s ease;
+}
+
+.order-view-btn:hover {
+    color: var(--dark-green);
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 768px) {
+    .dashboard-page-container {
+        flex-direction: column;
+        padding: 0 15px;
+    }
+
+    .sidebar {
+        flex: 1 1 100%; /* Sidebar takes full width */
+        margin-bottom: 20px;
+    }
+
+    .sidebar nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: space-around;
+    }
+
+    .sidebar nav a {
+        flex-grow: 1;
+        text-align: center;
+        justify-content: center;
+    }
+}
+
+/* --- REWARDS SPECIFIC STYLES --- */
+
+.rewards-card {
+    text-align: center;
+    background: var(--dark-green); /* Use the deep green as a background for emphasis */
+    color: white;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 5px 15px rgba(110, 142, 89, 0.4); /* Green shadow */
+}
+
+.rewards-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.rewards-header i {
+    font-size: 1.5rem;
+    color: #F7B447; /* Use an accent color like yellow/gold for the gift icon */
+}
+
+.rewards-header h2 {
+    font-family: 'Ojuju', sans-serif;
+    color: white;
+    font-size: 1.8rem;
+    margin: 0;
+}
+
+.rewards-balance {
+    margin: 20px 0;
+}
+
+.points-number {
+    font-family: 'Ojuju', sans-serif;
+    font-size: 4rem;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--brand-red); /* Highlight the number with your brand red */
+}
+
+.points-label {
+    display: block;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: -10px;
+}
+
+.points-value {
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+}
+
+.redeem-btn {
+    background-color: var(--brand-red);
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.redeem-btn:hover {
+    background-color: #A32646; /* Slightly darker red */
+}
+
+/* --- Profile Details --- */
+.profile-details p {
+    margin: 10px 0;
+    font-size: 1rem;
+}
+
+.profile-details span {
+    font-weight: 600;
+    color: var(--dark-green);
+}
+
+.edit-btn {
+    background: none;
+    border: 1px solid var(--dark-green);
+    color: var(--dark-green);
+    padding: 8px 15px;
+    border-radius: 5px;
+    margin-top: 15px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.edit-btn:hover {
+    background-color: var(--dark-green);
+    color: white;
+}
+
+/* --- Points History --- */
+#pointsHistory {
+    margin-top: 15px;
+}
+
+.history-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px dashed var(--mid-green);
+}
+
+.history-item:last-child {
+    border-bottom: none;
+}
+
+.history-description {
+    font-size: 0.95rem;
+}
+
+.history-points {
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.history-points.earned {
+    color: var(--dark-green);
+}
+
+.history-points.redeemed {
+    color: var(--brand-red);
+}
+
+/* --- Rewards Section Enhancements --- */
+.rewards-card {
+    text-align: center;
+    background: linear-gradient(135deg, var(--dark-green) 0%, #7ea56c 100%);
+    color: white;
+    padding: 40px 30px;
+    margin-bottom: 35px;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(110, 142, 89, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.rewards-card::after {
+    content: "";
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 150px;
+    height: 150px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 50%;
+}
+
+.rewards-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.rewards-header i {
+    font-size: 2rem;
+    color: #f8d65c;
+}
+
+.rewards-header h2 {
+    font-family: 'Ojuju', sans-serif;
+    font-size: 2rem;
+    margin: 0;
+}
+
+.rewards-balance {
+    margin: 25px 0;
+}
+
+.points-number {
+    font-size: 4.2rem;
+    font-weight: 800;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.points-label {
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.9;
+}
+
+.points-value {
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+    font-style: italic;
+    opacity: 0.95;
+}
+
+/* --- Redeem Button --- */
+.redeem-btn {
+    background: var(--brand-red);
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    font-family: 'Lato', sans-serif;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(120, 12, 40, 0.3);
+    transition: all 0.25s ease;
+}
+
+.redeem-btn:hover {
+    background-color: #a32646;
+    transform: translateY(-2px);
+}
+
+/* --- Profile Details Section --- */
+.profile-details {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.profile-details p {
+    font-size: 1rem;
+    margin: 0;
+}
+
+.profile-details span {
+    font-weight: 700;
+    color: var(--dark-green);
+}
+
+.edit-btn {
+    align-self: flex-start;
+    background: none;
+    border: 2px solid var(--dark-green);
+    color: var(--dark-green);
+    padding: 8px 20px;
+    border-radius: 6px;
+    margin-top: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.edit-btn:hover {
+    background-color: var(--dark-green);
+    color: white;
+}
+
+/* --- Points History Section --- */
+#pointsHistory {
+    margin-top: 20px;
+    background-color: #fafafa;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.03);
+}
+
+.history-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px dashed var(--mid-green);
+    transition: background-color 0.2s ease;
+}
+
+.history-item:hover {
+    background-color: #f9f9f9;
+}
+
+.history-description {
+    font-size: 0.95rem;
+    color: #333;
+}
+
+.history-points {
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.history-points.earned {
+    color: var(--dark-green);
+}
+
+.history-points.redeemed {
+    color: var(--brand-red);
+}

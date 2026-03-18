@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ILEWA Consumer Dashboard – Rewards & Loyalty</title>
+  <link rel="stylesheet" href="userdashbord.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Ojuju:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+</head>
+
+<body>
+  <header class="dashboard-header">
+    <div class="logo-container">
+      <a href="index.html" class="logo-text">ILEWA</a>
+    </div>
+    <div class="user-profile">
+      <span class="user-name"></span>
+      <button id="logoutBtn" class="logout-btn">Log Out</button>
+      <i class="fas fa-user-circle user-icon" title="Sign Out"></i>
+    </div>
+  </header>
+
+  <div class="main-layout">
+    <nav class="sidebar">
+      <ul>
+        <li><a href="consumer-dashboard.html"><i class="fas fa-home"></i> Home Overview</a></li>
+        <li><a href="orders-tracking.html"><i class="fas fa-box-open"></i> Orders & Tracking</a></li>
+        <li class="active"><a href="rewards-loyalty.html"><i class="fas fa-gem"></i> Rewards & Loyalty</a></li>
+        <li><a href="wishlist-favorites.html"><i class="fas fa-heart"></i> Wishlist & Favorites</a></li>
+        <li><a href="profile-settings.html"><i class="fas fa-user-cog"></i> Profile & Settings</a></li>
+      </ul>
+    </nav>
+
+    <main class="content-area">
+      <h1 class="page-title"><i class="fas fa-gem"></i> Rewards & Loyalty</h1>
+
+      <section class="card">
+        <div id="rewardsContent" style="text-align:center;color:gray;">Loading your rewards...</div>
+      </section>
+    </main>
+  </div>
+
+  <footer class="ilewa-footer">
+    <div class="footer-content">
+      <p>&copy; 2025 Ilewa. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script type="module">
+    import { supabase } from "./shared-supabase.js";
+
+    async function loadRewards() {
+      let { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        const { data: { session } } = await supabase.auth.getSession();
+        user = session?.user;
+      }
+      if (!user) return (window.location.href = "auth.html");
+
+      document.querySelector(".user-name").textContent = user.email;
+
+      const { data: loyalty, error } = await supabase
+        .from("customer_loyalty_summary")
+        .select("points_balance, full_name")
+        .eq("user_id", user.id)
+        .maybeSingle();
+
+      const container = document.getElementById("rewardsContent");
+      if (error) {
+        container.textContent = "Error loading rewards.";
+        return;
+      }
+
+      if (!loyalty || (!loyalty.points_balance)) {
+        container.textContent = "You haven’t earned any points yet. Make a purchase to start earning rewards!";
+        return;
+      }
+
+      const earned = loyalty.points_balance || 0;
+      const tier = earned >= 1000 ? "Gold" : earned >= 500 ? "Silver" : "Bronze";
+
+      container.innerHTML = `
+        <h2 style="color:var(--primary-red)">${earned} Ilewa Points</h2>
+        <p style="color:var(--text-light)">Tier: <span class="tag">${tier}</span></p>
+        <p>Keep shopping to unlock new rewards!</p>
+      `;
+    }
+
+    // === Logout Button + Icon ===
+    document.getElementById("logoutBtn").addEventListener("click", async () => {
+      await supabase.auth.signOut();
+      window.location.href = "auth.html";
+    });
+
+    document.querySelector(".fas.fa-user-circle").addEventListener("click", async () => {
+      await supabase.auth.signOut();
+      window.location.href = "auth.html";
+    });
+
+    loadRewards();
+  </script>
+</body>
+</html>

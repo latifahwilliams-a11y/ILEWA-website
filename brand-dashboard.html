@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ILEWA Brand Dashboard - Overview</title>
+  <link rel="stylesheet" href="userdashbord.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Ojuju:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+</head>
+<body>
+  <header class="dashboard-header">
+    <div class="logo-container">
+      <a href="index.html" class="logo-text">ILEWA</a>
+    </div>
+    <div class="user-profile">
+      <span class="user-name"></span>
+      <button id="logoutBtn" class="logout-btn">Log Out</button>
+      <i class="fas fa-user-circle user-icon" title="Sign Out"></i>
+    </div>
+  </header>
+
+  <div class="main-layout">
+    <nav class="sidebar">
+      <ul>
+        <li class="active"><a href="brand-dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard Overview</a></li>
+        <li><a href="brand-product-management.html"><i class="fas fa-box"></i> Product Management</a></li>
+        <li><a href="brand-sales-earnings.html"><i class="fas fa-chart-line"></i> Sales & Earnings</a></li>
+      </ul>
+    </nav>
+
+    <main class="content-area">
+      <h1 class="page-title"><i class="fas fa-tachometer-alt"></i> Dashboard Overview</h1>
+
+      <section class="key-metrics">
+        <div class="metric-card card">
+          <div class="icon-header"><i class="fas fa-dollar-sign icon-red"></i><h3>Total Sales</h3></div>
+          <p class="value-large" id="totalSales">$0</p>
+          <p class="subtitle">Last 30 days</p>
+        </div>
+        <div class="metric-card card">
+          <div class="icon-header"><i class="fas fa-shopping-basket icon-green"></i><h3>Avg. Order Value</h3></div>
+          <p class="value-large" id="avgOrderValue">$0</p>
+          <p class="subtitle">Based on recent orders</p>
+        </div>
+        <div class="metric-card card">
+          <div class="icon-header"><i class="fas fa-users icon-red"></i><h3>Total Customers</h3></div>
+          <p class="value-large" id="totalCustomers">0</p>
+          <p class="subtitle">Unique buyers</p>
+        </div>
+      </section>
+
+      <section class="card" style="margin-top: 25px;">
+        <h2 style="color: var(--primary-green); margin-bottom: 15px;">Top Selling Products</h2>
+        <div class="order-table-container">
+          <table>
+            <thead>
+              <tr><th>Product Name</th><th>Units Sold</th><th>Gross Sales</th><th>Inventory</th><th>Rating</th></tr>
+            </thead>
+            <tbody id="productsBody"><tr><td colspan="5" style="text-align:center; color:gray;">Loading...</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer class="ilewa-footer"><div class="footer-content"><p>&copy; 2025 Ilewa. All rights reserved.</p></div></footer>
+
+  <script type="module">
+    import { supabase } from "./shared-supabase.js";
+
+    async function loadBrandOverview() {
+      let { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        const { data: { session } } = await supabase.auth.getSession();
+        user = session?.user;
+      }
+      if (!user) return (window.location.href = "auth.html");
+      document.querySelector(".user-name").textContent = user.email;
+
+      const { data: orders } = await supabase
+        .from("orders")
+        .select("id, total_amount, user_id")
+        .eq("brand_id", user.id);
+
+      if (orders && orders.length > 0) {
+        const totalSales = orders.reduce((sum, o) => sum + Number(o.total_amount), 0);
+        const avgOrderValue = totalSales / orders.length;
+        const uniqueCustomers = new Set(orders.map(o => o.user_id)).size;
+        document.getElementById("totalSales").textContent = `$${totalSales.toFixed(2)}`;
+        document.getElementById("avgOrderValue").textContent = `$${avgOrderValue.toFixed(2)}`;
+        document.getElementById("totalCustomers").textContent = uniqueCustomers;
+      }
+
+      const { data: products } = await supabase
+        .from("products")
+        .select("name, units_sold, price, inventory, rating")
+        .eq("brand_id", user.id)
+        .order("units_sold", { ascending: false })
+        .limit(5);
+
+      const tbody = document.getElementById("productsBody");
+      if (!products || products.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:gray;">No products yet.</td></tr>`;
+      } else {
+        tbody.innerHTML = products
+          .map(p => `
+            <tr>
+              <td>${p.name}</td>
+              <td>${p.units_sold || 0}</td>
+              <td>$${(p.units_sold * p.price).toFixed(2)}</td>
+              <td>${p.inventory ?? "N/A"}</td>
+              <td>${p.rating ? p.rating.toFixed(1) : "—"}</td>
+            </tr>
+          `).join("");
+      }
+    }
+
+    document.getElementById("logoutBtn").addEventListener("click", async () => {
+      await supabase.auth.signOut();
+      window.location.href = "auth.html";
+    });
+
+    document.querySelector(".fas.fa-user-circle").addEventListener("click", async () => {
+      await supabase.auth.signOut();
+      window.location.href = "auth.html";
+    });
+
+    loadBrandOverview();
+  </script>
+</body>
+</html>

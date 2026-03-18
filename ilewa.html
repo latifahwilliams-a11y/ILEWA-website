@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ILEWA | Join the Waitlist</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Ojuju:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        /* --- Color Variables --- */
+        :root {
+            --brand-color: #780c28; /* Deep red/maroon (Primary) */
+            --light-green: #eafaea; /* Very light green (Background) */
+            --dark-green: #3c5430; /* Darker green (Text/Accents) */
+            --mid-green: #4b6940; /* Medium green */
+            --overlay-green: rgba(110, 142, 89, 0.9); /* Opaque green for CTA section */
+            --white: #ffffff;
+            --black: #000000;
+        }
+
+        /* --- Base Styles --- */
+        body {
+            margin: 0;
+            font-family: 'Lato', sans-serif;
+            background-color: var(--light-green);
+            color: var(--dark-green);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+
+        a:hover {
+            opacity: 0.8;
+        }
+
+        /* ======================================= */
+        /* --- NAVIGATION (MODIFIED) --- */
+        /* ======================================= */
+        .navbar {
+            display: flex;
+            /* Spread items: ABOUT on left, Placeholder on right, pushing the center slogan */
+            justify-content: space-between; 
+            align-items: center;
+            padding: 15px 40px;
+            background-color: var(--brand-color); /* Red Header */
+            position: relative; 
+            width: 100%;
+            z-index: 1000;
+        }
+
+        /* ABOUT link is naturally aligned left by Flexbox */
+        .nav-link-about {
+            font-size: 14px;
+            font-weight: 400;
+            color: var(--white);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 5px 0;
+            /* Ensures ABOUT takes up space on the left for centering */
+            min-width: 100px; 
+        }
+        
+        /* New Centered Slogan Style */
+        .nav-center-slogan {
+            font-family: 'Lato', sans-serif;
+            font-size: 14px;
+            font-weight: 700; /* Bolder for impact */
+            color: var(--white);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-align: center;
+        }
+
+        /* Placeholder to balance the ABOUT link and perfectly center the slogan */
+        .nav-placeholder {
+            min-width: 100px; /* Same width as the ABOUT link */
+        }
+        
+        /* --- Hero Section: Asymmetrical Layout --- */
+        .hero-section {
+            display: flex;
+            min-height: 700px;
+            background-color: var(--white);
+            position: relative;
+        }
+
+        .hero-left {
+            flex: 1;
+            padding: 80px 80px 80px 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            background-color: var(--light-green); 
+        }
+
+        .hero-right {
+            flex: 1;
+            background-color: var(--white);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .hero-right img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; 
+            display: block;
+        }
+
+        .hero-title {
+            font-family: 'Ojuju', sans-serif;
+            font-size: 8vw; 
+            line-height: 0.9;
+            color: var(--brand-color);
+            margin: 0 0 20px 0;
+            text-transform: uppercase;
+        }
+
+        .hero-tagline {
+            font-size: 20px;
+            font-weight: 400;
+            color: var(--dark-green);
+            margin-bottom: 30px;
+            max-width: 450px;
+        }
+
+        .hero-cta {
+            background-color: var(--brand-color);
+            color: var(--white);
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            padding: 15px 30px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: background-color 0.3s ease;
+        }
+
+        .hero-cta:hover {
+            background-color: var(--dark-green); 
+        }
+        
+        /* --- Central CTA Section (MAIN FOCUS) --- */
+        .central-cta-section {
+            background-color: var(--overlay-green); 
+            color: var(--white);
+            text-align: center;
+            padding: 100px 40px; 
+            /* Added Top/Bottom Red Borders for extra punch */
+            border-top: 8px solid var(--brand-color); 
+            border-bottom: 8px solid var(--brand-color); 
+        }
+        
+        .waitlist-slogan {
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .central-cta-section h2 {
+            font-family: 'Ojuju', sans-serif;
+            font-size: 64px; /* BIGGER text for maximum attention */
+            margin-bottom: 5px;
+            line-height: 1;
+        }
+
+        .central-cta-section p {
+            font-size: 20px;
+            font-weight: 300;
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .waitlist-form {
+            display: flex;
+            justify-content: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .waitlist-form input {
+            flex-grow: 1;
+            padding: 18px 25px; 
+            border: none;
+            border-radius: 4px 0 0 4px;
+            font-size: 18px;
+            font-family: 'Lato', sans-serif;
+        }
+
+        .waitlist-form button {
+            background-color: var(--brand-color);
+            color: var(--white);
+            border: none;
+            padding: 18px 35px; 
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            font-size: 18px;
+            text-transform: uppercase;
+            transition: background-color 0.3s ease;
+        }
+
+        .waitlist-form button:hover {
+            background-color: var(--dark-green);
+        }
+
+        /* --- Image Grid Section for Discovery --- */
+        .image-grid-section {
+            background-color: var(--white);
+            padding: 80px 40px;
+            text-align: center;
+        }
+
+        .grid-header {
+            font-family: 'Ojuju', sans-serif;
+            font-size: 48px;
+            color: var(--mid-green);
+            margin-bottom: 40px;
+        }
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .grid-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 4px;
+        }
+
+        .grid-item img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            display: block;
+            opacity: 0.9;
+            transition: transform 0.5s ease, opacity 0.3s ease;
+        }
+        
+        .grid-item:hover img {
+            transform: scale(1.05);
+            opacity: 1;
+        }
+
+        /* --- Footer (Red) --- */
+        .footer-social {
+            background-color: var(--brand-color); /* Red Footer */
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .social-links {
+            margin-top: 10px;
+        }
+
+        .social-links a {
+            font-size: 28px;
+            margin: 0 15px;
+            color: var(--white); /* White links for contrast */
+            transition: opacity 0.3s ease;
+        }
+
+        /* --- Responsive Adjustments --- */
+        @media (max-width: 1024px) {
+            .hero-section {
+                flex-direction: column;
+                min-height: auto;
+            }
+            .hero-left, .hero-right {
+                padding: 100px 40px;
+            }
+            .hero-title {
+                font-size: 15vw;
+            }
+            .image-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .central-cta-section h2 {
+                font-size: 52px;
+            }
+            /* Hide the centered slogan on smaller devices to prevent clutter */
+            .nav-center-slogan {
+                display: none;
+            }
+            /* Remove the placeholder when the slogan is hidden */
+            .nav-placeholder {
+                min-width: 0;
+            }
+        }
+        @media (max-width: 600px) {
+            .hero-left {
+                padding: 80px 20px 40px 20px;
+            }
+            .hero-title {
+                font-size: 18vw;
+            }
+            .waitlist-form {
+                flex-direction: column;
+                max-width: 300px;
+            }
+            .waitlist-form input, .waitlist-form button {
+                border-radius: 4px;
+                margin-bottom: 10px;
+            }
+            .central-cta-section {
+                padding: 60px 20px;
+            }
+            .central-cta-section h2 {
+                font-size: 42px;
+            }
+            .waitlist-slogan {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <a href="#" class="nav-link-about">ABOUT</a>
+    
+    <div class="nav-center-slogan">A NEW HOME FOR BEAUTY</div>
+    
+    <div class="nav-placeholder"></div>
+</nav>
+
+<section class="hero-section">
+    <div class="hero-left">
+        <h1 class="hero-title">ILEWA</h1>
+        <p class="hero-tagline">
+            A new way to shop your favorite beauty products and discover new small owned businesses.
+        </p>
+        <a href="#cta" class="hero-cta">GET EARLY ACCESS</a>
+    </div>
+
+    <div class="hero-right">
+        <img src="https://samirgrey.co/cdn/shop/files/img_RM_1_1-2-2.jpg?v=1755556607&width=1225" alt="Skincare routine product application">
+    </div>
+</section>
+
+<section class="central-cta-section" id="cta">
+    <div class="waitlist-slogan"></div> 
+    <h2>JOIN THE WAITLIST.</h2>
+    <p>
+        Be the first to access the platform, discover unique brands, and start earning rewards with every purchase.
+    </p>
+
+    <form class="waitlist-form">
+        <input type="email" placeholder="Your Email Address" required>
+        <button type="submit">GET EARLY ACCESS</button>
+    </form>
+</section>
+
+<section class="image-grid-section">
+    <h2 class="grid-header">YOUR NEXT BEAUTY OBSESSION AWAITS</h2>
+    <div class="image-grid">
+        <div class="grid-item"><img src="https://cdn.prod.website-files.com/621796a8c6ab99d03ddfa05c/67a924726def185314354907_Sliq_Product_Campaign0586-p-2600.jpeg" alt="Product image 1"></div>
+        <div class="grid-item"><img src="https://cdn.shopify.com/s/files/1/0939/6702/4393/files/silk-veil-tuberose-jasmine-shower-oil-39bc_2_3d087cec-1c10-48af-a466-b37defaafbde.png?v=1753453835&width=1000&height=1333&crop=center" alt="Product image 2"></div>
+        <div class="grid-item"><img src="https://moodeaux.com/cdn/shop/files/MOODEAUX_PunkStar_Eau_de_Parfum_50mL_900x.png?v=1730893512" alt="Product image 3"></div>
+        <div class="grid-item"><img src="https://shop.deonlibra.com/cdn/shop/files/counterkitsiteupdate_3000x.png?v=1754786773" alt="Product image 4"></div>
+    </div>
+</section>
+
+<footer class="footer-social">
+    <div class="social-links">
+        <a href="#" aria-label="Follow us on Substack"><i class="fas fa-newspaper"></i></a>
+        <a href="#" aria-label="Connect with us on LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        <a href="#" aria-label="Follow us on Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" aria-label="Follow us on TikTok"><i class="fab fa-tiktok"></i></a>
+    </div>
+</footer>
+
+</body>
+</html>

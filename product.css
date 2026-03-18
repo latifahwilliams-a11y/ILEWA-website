@@ -1,0 +1,382 @@
+/* product.css */
+
+/* --- Color Variables (Ensure consistency) --- */
+/* Variables assumed to be defined in style.css, but repeated here for clarity */
+:root {
+  --white: #ffffff;
+  --mid-green: #CAE0BC; 
+  --dark-green: #6E8E59; 
+  --brand-red: #780C28; 
+  --dark-text: #222; 
+}
+
+
+/* ======================================= */
+/* === PRODUCT PAGE LAYOUT === */
+/* ======================================= */
+
+.product-detail-wrapper {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.top-section {
+    display: flex;
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+/* Image Gallery Layout */
+.image-gallery-area {
+    flex: 1.2; /* Take up more space than details */
+}
+
+.main-image-wrapper {
+    width: 100%;
+    margin-bottom: 15px;
+    overflow: hidden;
+}
+
+#mainProductImage {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Thumbnail Scroller Styles */
+.thumbnail-scroller-wrapper {
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 0 35px; /* Space for the arrows */
+}
+
+.thumbnail-gallery-scroll {
+    display: flex;
+    overflow-x: scroll; /* Allows for horizontal scrolling */
+    white-space: nowrap;
+    gap: 10px;
+    padding: 5px 0;
+    -webkit-overflow-scrolling: touch; /* Better mobile scrolling */
+    /* Hide scrollbar */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* IE and Edge */
+}
+
+.thumbnail-gallery-scroll::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+.thumbnail {
+    width: 100px; /* Fixed size for thumbnails */
+    height: 100px;
+    object-fit: cover;
+    border-radius: 5px;
+    cursor: pointer;
+    opacity: 0.7;
+    border: 2px solid transparent;
+    transition: all 0.2s ease;
+    flex-shrink: 0; /* Prevents thumbnails from shrinking */
+}
+
+.thumbnail.active, .thumbnail:hover {
+    opacity: 1;
+    border-color: var(--brand-red); /* Highlight active thumbnail */
+}
+
+/* Scroll Arrows */
+.scroll-arrow {
+    position: absolute;
+    background: white;
+    border: 1px solid var(--mid-green);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    color: var(--dark-green);
+}
+
+#scrollLeftBtn {
+    left: 0;
+}
+
+#scrollRightBtn {
+    right: 0;
+}
+
+/* --- Product Details --- */
+.details-area {
+    flex: 1; 
+}
+
+.product-name {
+    font-size: 2.2rem;
+    margin-top: 0;
+    color: var(--dark-green);
+}
+
+.product-price {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--brand-red);
+    margin-bottom: 25px;
+}
+
+/* Quantity Selector */
+.quantity-selector {
+    display: flex;
+    border: 1px solid var(--mid-green);
+    width: 120px;
+    margin-right: 15px;
+    border-radius: 5px;
+}
+
+.quantity-selector button, .quantity-selector input {
+    border: none;
+    background: none;
+    text-align: center;
+    padding: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    font-family: 'Lato', sans-serif;
+}
+
+/* Add to Cart Form */
+.add-to-cart-form {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.add-to-bag-btn {
+    flex-grow: 1;
+    background-color: var(--brand-red);
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 700;
+    transition: background-color 0.2s;
+}
+
+/* --- Product Tabs --- */
+.product-tabs {
+    border-top: 1px solid var(--mid-green);
+    padding-top: 30px;
+    margin-top: 30px;
+}
+
+.tabs-header {
+    display: flex;
+    border-bottom: 1px solid var(--mid-green);
+    margin-bottom: 20px;
+}
+
+.tab-button {
+    background: none;
+    border: none;
+    padding: 10px 20px;
+    font-family: 'Ojuju', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #888;
+    cursor: pointer;
+    position: relative;
+    transition: color 0.2s;
+}
+
+.tab-button.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: var(--brand-red);
+}
+
+.tab-content {
+    display: none;
+    line-height: 1.6;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+
+/* ======================================= */
+/* === CART DRAWER STYLES (FIXED IMAGE ICON) === */
+/* ======================================= */
+
+.cart-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    max-width: 380px; 
+    height: 100%;
+    background-color: var(--white);
+    box-shadow: -4px 0 12px rgba(0, 0, 0, 0.1);
+    z-index: 1001;
+    transform: translateX(100%);
+    transition: transform 0.4s ease-out;
+    display: flex;
+    flex-direction: column;
+}
+
+.cart-drawer.open {
+    transform: translateX(0); 
+}
+
+.cart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid var(--mid-green);
+}
+
+/* --- Cart Item Layout (Fixed) --- */
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; 
+    padding: 15px 0;
+    border-bottom: 1px dashed var(--mid-green);
+}
+
+.item-details {
+    flex-grow: 1;
+    margin-right: 10px;
+    /* Ensure content doesn't force details section wider than necessary */
+    min-width: 0; 
+}
+
+.item-name-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    /* Ensure long product names wrap gracefully within the available space */
+    width: 100%; 
+}
+
+/* CRITICAL FIX: Defined size and object-fit for the icon */
+.item-icon-image {
+    width: 40px; 
+    height: 40px;
+    object-fit: cover; /* Ensures image is cropped, not stretched */
+    border-radius: 4px; 
+    margin-right: 10px;
+    flex-shrink: 0; /* Prevents the image from shrinking */
+}
+
+.item-name {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--dark-green);
+    margin: 0;
+    /* Allow text to wrap if the name is too long */
+    white-space: normal; 
+    overflow-wrap: break-word; 
+}
+
+.item-shade, .item-price {
+    font-size: 0.9rem;
+    color: #555;
+    margin: 2px 0;
+}
+
+.item-quantity-controls {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--mid-green);
+    width: 80px; 
+    border-radius: 4px;
+    margin-top: 8px;
+}
+
+.item-quantity-controls button {
+    border: none;
+    background: none;
+    padding: 2px 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    color: var(--brand-red);
+}
+
+.remove-item-btn {
+    background: none;
+    border: none;
+    color: #aaa;
+    cursor: pointer;
+    padding: 5px;
+    font-size: 1rem;
+    transition: color 0.2s;
+    flex-shrink: 0;
+}
+
+/* --- Cart Footer --- */
+.cart-footer {
+    padding: 20px;
+    border-top: 1px solid var(--mid-green);
+}
+
+.subtotal {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: var(--dark-green);
+}
+
+.checkout-btn {
+    width: 100%;
+    background-color: var(--brand-red);
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 700;
+    transition: background-color 0.2s;
+}
+
+.cart-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    display: none;
+}
+
+.cart-backdrop.active {
+    display: block;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+    .top-section {
+        flex-direction: column;
+    }
+}
+@media (max-width: 500px) {
+    .cart-drawer {
+        max-width: 100%;
+    }
+}

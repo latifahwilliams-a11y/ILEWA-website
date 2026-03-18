@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ILEWA Brand Dashboard - Sales & Earnings</title>
+  <link rel="stylesheet" href="userdashbord.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Ojuju:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+</head>
+
+<body>
+  <header class="dashboard-header">
+    <div class="logo-container">
+      <a href="index.html" class="logo-text">ILEWA</a>
+    </div>
+    <div class="user-profile">
+      <span class="user-name"></span>
+      <button id="logoutBtn" class="logout-btn">Log Out</button>
+      <i class="fas fa-user-circle user-icon" title="Sign Out"></i>
+    </div>
+  </header>
+
+  <div class="main-layout">
+    <nav class="sidebar">
+      <ul>
+        <li><a href="brand-dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard Overview</a></li>
+        <li><a href="brand-product-management.html"><i class="fas fa-box"></i> Product Management</a></li>
+        <li class="active"><a href="brand-sales-earnings.html"><i class="fas fa-chart-line"></i> Sales & Earnings</a></li>
+      </ul>
+    </nav>
+
+    <main class="content-area">
+      <h1 class="page-title"><i class="fas fa-chart-line"></i> Sales & Earnings</h1>
+
+      <section class="key-metrics">
+        <div class="metric-card card">
+          <h3>Total Revenue</h3>
+          <p class="value-large" id="totalRevenue">$0</p>
+        </div>
+        <div class="metric-card card">
+          <h3>Net Earnings</h3>
+          <p class="value-large" id="netEarnings">$0</p>
+        </div>
+        <div class="metric-card card">
+          <h3>Commission (15%)</h3>
+          <p class="value-large" id="commissionValue">$0</p>
+        </div>
+      </section>
+
+      <section class="card" style="margin-top:25px;">
+        <h2 style="color:var(--primary-green)">Recent Transactions</h2>
+        <div class="order-table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Transaction ID</th>
+                <th>Date</th>
+                <th>Gross</th>
+                <th>Fees</th>
+                <th>Net</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="txBody">
+              <tr><td colspan="6" style="text-align:center;color:gray;">Loading...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer class="ilewa-footer">
+    <div class="footer-content">
+      <p>&copy; 2025 Ilewa. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script type="module">
+    import { supabase } from "./shared-supabase.js";
+
+    async function loadEarnings() {
+      let { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        const { data: { session } } = await supabase.auth.getSession();
+        user = session?.user;
+      }
+      if (!user) return (window.location.href = "auth.html");
+      document.querySelector(".user-name").textContent = user.email;
+
+      const { data: orders, error } = await supabase
+        .from("orders")
+        .select("id,total_amount,status,created_at")
+        .eq("brand_id", user.id)
+        .order("created_at", { ascending: false })
+        .limit(10);
+
+      const tbody = document.getElementById("txBody");
+      if (error) {
+        tbody.innerHTML = `<tr><td colspan="6" style="color:red;">Error loading data.</td></tr>`;
+        return;
+      }
+
+      if (!orders || orders.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" style="color:gray;">No transactions yet.</td></tr>`;
+        return;
+      }
+
+      const gross = orders.reduce((sum, o) => sum + Number(o.total_amount), 0);
+      const commission = gross * 0.15;
+      const processing = gross * 0.03;
+      const net = gross - commission - processing;
+
+      document.getElementById("totalRevenue").textContent = `$${gross.toFixed(2)}`;
+      document.getElementById("commissionValue").textContent = `$${commission.toFixed(2)}`;
+      document.getElementById("netEarnings").textContent = `$${net.toFixed(2)}`;
+
+      tbody.innerHTML = orders.map(o => `
+        <tr>
+          <td>#${o.id}</td>
+          <td>${new Date(o.created_at).toISOString().slice(0,10)}</td>
+          <td>$${Number(o.total_amount).toFixed(2)}</td>
+          <td>$${(Number(o.total_amount)*0.18).toFixed(2)}</td>
+          <td>$${(Number(o.total_amount)*0.82).toFixed(2)}</td>
+          <td><span class="tag">${o.status}</span></td>
+        </tr>
+      `).join("");
+    }
+
+    // === Logout Button + Icon ===
+    document.getElementById("logoutBtn").addEventListener("click", async () => {
+      await supabase.auth.signOut();
+      window.location.href = "auth.html";
+    });
+
+    document.querySelector(".fas.fa-user-circle").addEventListener("click", async () => {
+      await supabase.auth.signOut();
+      window.location.href = "auth.html";
+    });
+
+    loadEarnings();
+  </script>
+</body>
+</html>
