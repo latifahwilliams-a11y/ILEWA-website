@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return `
         <div class="product-card" role="listitem">
           <a href="${productLink}" class="product-image" aria-label="View ${product.name}">
-            <img src="${imageUrl}" alt="${product.name}" loading="lazy">
+            <img src="${imageUrl}" alt="${product.name}" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/400x400/EAFAEA/780C28?text=ILEWA'">
           </a>
           <div class="product-info">
             <div class="product-title">${product.name}</div>
