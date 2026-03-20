@@ -298,21 +298,37 @@
 }
 
 .item-quantity-controls {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    border: 1px solid var(--mid-green);
-    width: 80px; 
-    border-radius: 4px;
-    margin-top: 8px;
+    border: 2px solid var(--brand-red);
+    border-radius: 6px;
+    margin-top: 10px;
+    overflow: hidden;
 }
 
 .item-quantity-controls button {
     border: none;
-    background: none;
-    padding: 2px 5px;
-    font-size: 1rem;
+    background: var(--brand-red);
+    padding: 6px 12px;
+    font-size: 1.1rem;
+    font-weight: 700;
     cursor: pointer;
-    color: var(--brand-red);
+    color: #fff;
+    line-height: 1;
+    transition: background-color 0.2s;
+}
+
+.item-quantity-controls button:hover {
+    background: #5d0c20;
+}
+
+.item-quantity-controls span {
+    padding: 0 14px;
+    font-weight: 700;
+    font-size: 1rem;
+    min-width: 28px;
+    text-align: center;
+    color: var(--dark-text);
 }
 
 .remove-item-btn {

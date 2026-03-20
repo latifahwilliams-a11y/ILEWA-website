@@ -1,5 +1,31 @@
 /* style.css (Restored, Consolidated, and Finalized) */
 
+/* ===== SKIP LINK (Accessibility) ===== */
+.skip-link {
+    position: absolute;
+    top: -100%;
+    left: 0;
+    background: var(--brand-red);
+    color: #fff;
+    padding: 10px 20px;
+    font-weight: 700;
+    font-size: 1rem;
+    z-index: 9999;
+    text-decoration: none;
+    border-radius: 0 0 4px 0;
+    transition: top 0.2s;
+}
+.skip-link:focus {
+    top: 0;
+}
+
+/* ===== FOCUS STYLES (Accessibility) ===== */
+*:focus-visible {
+    outline: 3px solid var(--brand-red);
+    outline-offset: 3px;
+    border-radius: 2px;
+}
+
 /* --- Color Variables (Consolidating all hex codes into variables) --- */
 :root {
     --white: #ffffff;

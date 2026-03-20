@@ -35,17 +35,18 @@ document.addEventListener("DOMContentLoaded", () => {
       const productLink = `product.html?id=${product.id}`;
 
       return `
-        <div class="product-card">
-          <div class="product-image" onclick="window.location.href='${productLink}'">
-            <img src="${imageUrl}" alt="${product.name}">
-          </div>
+        <div class="product-card" role="listitem">
+          <a href="${productLink}" class="product-image" aria-label="View ${product.name}">
+            <img src="${imageUrl}" alt="${product.name}" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/400x400/EAFAEA/780C28?text=ILEWA'">
+          </a>
           <div class="product-info">
             <div class="product-title">${product.name}</div>
             <div class="product-subtitle">${product.subtitle || ""}</div>
 
-            <button 
-              class="add-to-bag" 
-              onclick="addToCart('${product.id}', 1); if (typeof openCart==='function') openCart(); event.stopPropagation();">
+            <button
+              class="add-to-bag"
+              onclick="addToCart('${product.id}', 1); if (typeof openCart==='function') openCart(); event.stopPropagation();"
+              aria-label="Add ${product.name} to cart — ${formattedPrice}">
               <span class="bag-left">Add to Cart</span>
               <span class="bag-right">${formattedPrice}</span>
             </button>
@@ -83,6 +84,14 @@ document.addEventListener("DOMContentLoaded", () => {
   if (h1Element) {
     h1Element.textContent = pageTitle;
   }
+
+  // Mark active category link for accessibility and SEO
+  document.querySelectorAll('.category-link').forEach(link => {
+    if (link.dataset.category === categoryFilter) {
+      link.setAttribute('aria-current', 'page');
+      link.classList.add('active');
+    }
+  });
 
   // --- Final Render ---
   renderProducts(productsToRender);

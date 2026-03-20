@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const imageGalleryHTML = `
         <div class="product-image-display">
             <div class="main-image-wrapper">
-                <img id="mainProductImage" src="${product.images[0]}" alt="${product.name}">
+                <img id="mainProductImage" src="${product.images[0]}" alt="${product.name}" onerror="this.onerror=null;this.src='https://placehold.co/600x600/EAFAEA/780C28?text=ILEWA'">
             </div>
             
             <div class="thumbnail-scroller-wrapper">
@@ -42,10 +42,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 
                 <div class="thumbnail-gallery-scroll" id="thumbnailScrollArea">
                     ${product.images.map((imgUrl, index) => `
-                        <img src="${imgUrl}" 
+                        <img src="${imgUrl}"
                              alt="${product.name} thumbnail ${index + 1}"
                              class="thumbnail ${index === 0 ? 'active' : ''}"
-                             data-full-src="${imgUrl}">
+                             data-full-src="${imgUrl}"
+                             onerror="this.onerror=null;this.src='https://placehold.co/120x120/EAFAEA/780C28?text=ILEWA'">
                     `).join('')}
                 </div>
                 

@@ -3,6 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Sign in or create your ILEWA account to shop beauty products, track orders, and earn loyalty rewards." />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta property="og:title" content="ILEWA | Account" />
+  <meta property="og:description" content="Sign in or create your ILEWA account to shop beauty products, track orders, and earn loyalty rewards." />
+  <meta property="og:type" content="website" />
   <title>Ilewa | Account</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Ojuju:wght@500;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
@@ -10,6 +15,7 @@
   <link rel="stylesheet" href="auth.css" />
 </head>
 <body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
   <header class="dashboard-header">
     <div class="logo-container">
       <a href="index.html" class="logo-text">ILEWA</a>
@@ -26,19 +32,21 @@
     </div>
   </header>
 
-  <main class="auth-page-container">
+  <main class="auth-page-container" id="main-content">
     <div class="auth-box">
-      <div class="auth-tabs">
-        <button class="auth-tab active" id="loginTab">LOG IN</button>
-        <button class="auth-tab" id="signupTab">SIGN UP</button>
+      <div class="auth-tabs" role="tablist" aria-label="Account options">
+        <button class="auth-tab active" id="loginTab" role="tab" aria-selected="true" aria-controls="loginForm">LOG IN</button>
+        <button class="auth-tab" id="signupTab" role="tab" aria-selected="false" aria-controls="signupForm">SIGN UP</button>
       </div>
 
       <!-- Login Form -->
-      <div id="loginForm" class="auth-form active">
-        <h2>Welcome Back</h2>
-        <form id="loginFormEl">
-          <input type="email" id="loginEmail" placeholder="Email Address" required>
-          <input type="password" id="loginPassword" placeholder="Password" required>
+      <div id="loginForm" class="auth-form active" role="tabpanel" aria-labelledby="loginTab">
+        <h1 style="font-size:1.5rem;">Welcome Back</h1>
+        <form id="loginFormEl" novalidate>
+          <label for="loginEmail" class="form-label">Email Address</label>
+          <input type="email" id="loginEmail" placeholder="you@example.com" required autocomplete="email">
+          <label for="loginPassword" class="form-label">Password</label>
+          <input type="password" id="loginPassword" placeholder="Your password" required autocomplete="current-password" minlength="6">
           <button type="submit" class="auth-btn">Log In</button>
           <a href="#" class="forgot-link">Forgot Password?</a>
           <p class="note" style="color:gray; margin-top:8px;">Brand founders: log in with credentials provided by Ilewa.</p>
@@ -46,14 +54,17 @@
       </div>
 
       <!-- Signup Form -->
-      <div id="signupForm" class="auth-form">
-        <h2>Create Your Account</h2>
-        <form id="signupFormEl">
-          <input type="text" id="signupName" placeholder="Full Name (Optional)">
-          <input type="email" id="signupEmail" placeholder="Email Address" required>
-          <input type="password" id="signupPassword" placeholder="Password (Min 6 characters)" required>
+      <div id="signupForm" class="auth-form" role="tabpanel" aria-labelledby="signupTab" hidden>
+        <h1 style="font-size:1.5rem;">Create Your Account</h1>
+        <form id="signupFormEl" novalidate>
+          <label for="signupName" class="form-label">Full Name <span style="font-weight:300;">(Optional)</span></label>
+          <input type="text" id="signupName" placeholder="Jane Doe" autocomplete="name">
+          <label for="signupEmail" class="form-label">Email Address</label>
+          <input type="email" id="signupEmail" placeholder="you@example.com" required autocomplete="email">
+          <label for="signupPassword" class="form-label">Password <span style="font-weight:300;">(Min 6 characters)</span></label>
+          <input type="password" id="signupPassword" placeholder="Create a password" required autocomplete="new-password" minlength="6">
           <button type="submit" class="auth-btn">Sign Up</button>
-          <p class="terms-text">By signing up, you agree to our Terms and Privacy Policy.</p>
+          <p class="terms-text">By signing up, you agree to our <a href="terms.html">Terms of Service</a> and <a href="privacy.html">Privacy Policy</a>.</p>
         </form>
       </div>
     </div>
@@ -74,19 +85,23 @@
   </footer>
 
   <script>
-    // Toggle between Login and Signup tabs
+    function showTab(activeTab, hiddenTab, activePanel, hiddenPanel) {
+      document.getElementById(activePanel).classList.add('active');
+      document.getElementById(activePanel).removeAttribute('hidden');
+      document.getElementById(hiddenPanel).classList.remove('active');
+      document.getElementById(hiddenPanel).setAttribute('hidden', '');
+      document.getElementById(activeTab).classList.add('active');
+      document.getElementById(activeTab).setAttribute('aria-selected', 'true');
+      document.getElementById(hiddenTab).classList.remove('active');
+      document.getElementById(hiddenTab).setAttribute('aria-selected', 'false');
+    }
+
     document.getElementById('loginTab').addEventListener('click', () => {
-      document.getElementById('loginForm').classList.add('active');
-      document.getElementById('signupForm').classList.remove('active');
-      document.getElementById('loginTab').classList.add('active');
-      document.getElementById('signupTab').classList.remove('active');
+      showTab('loginTab', 'signupTab', 'loginForm', 'signupForm');
     });
 
     document.getElementById('signupTab').addEventListener('click', () => {
-      document.getElementById('signupForm').classList.add('active');
-      document.getElementById('loginForm').classList.remove('active');
-      document.getElementById('signupTab').classList.add('active');
-      document.getElementById('loginTab').classList.remove('active');
+      showTab('signupTab', 'loginTab', 'signupForm', 'loginForm');
     });
   </script>
 

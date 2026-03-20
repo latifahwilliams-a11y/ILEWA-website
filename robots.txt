@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Disallow: /brand-dashboard.html
+Disallow: /brand-product-management.html
+Disallow: /brand-sales-earnings.html
+Disallow: /orders.html
+Disallow: /rewards-loyalty.html
+Disallow: /userdashbord.html
+Disallow: /checkout.html
+
+Sitemap: https://ilewa.world/sitemap.xml

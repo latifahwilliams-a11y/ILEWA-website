@@ -5,9 +5,10 @@
 #checkoutItems .ci{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px dashed var(--mid-green);}
 #checkoutItems img{width:64px;height:64px;object-fit:cover;border-radius:6px;}
 .ci .name{font-weight:700;color:var(--dark-green);}
-.qtyctrl{display:inline-flex;border:1px solid var(--mid-green);border-radius:4px;align-items:center;}
-.qtyctrl button{background:none;border:none;padding:4px 8px;cursor:pointer;color:var(--brand-red);font-weight:700;}
-.qtyctrl span{padding:0 8px;}
+.qtyctrl{display:inline-flex;border:2px solid var(--brand-red);border-radius:6px;align-items:center;overflow:hidden;margin-top:6px;}
+.qtyctrl button{background:var(--brand-red);border:none;padding:7px 14px;cursor:pointer;color:#fff;font-weight:700;font-size:1.1rem;line-height:1;transition:background-color 0.2s;}
+.qtyctrl button:hover{background:#5d0c20;}
+.qtyctrl span{padding:0 16px;font-weight:700;min-width:28px;text-align:center;}
 .summary{border:1px solid var(--mid-green);padding:20px;border-radius:8px;background:#fff;}
 .summary .row{display:flex;justify-content:space-between;margin:10px 0;}
 .summary .total{font-weight:800;font-size:1.2rem;}
